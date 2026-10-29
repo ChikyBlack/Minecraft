@@ -3,61 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minecraft - Redescubre el Survival</title>
+  <title>Minecraft - Redescubre el Survival Minimalista</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     :root {
       --bg-color: #ffffff;
-      --text-color: #1a1a1a;
-      --text-muted: #666666;
+      --bg-grid: #f4f5f7;
+      --text-color: #111827;
+      --text-muted: #4b5563;
       --green-primary: #5b8731;
       --green-hover: #4a7026;
-      --border-color: #eeeeee;
-      --card-bg: #f9f9f9;
+      --border-color: #e5e7eb;
+      --card-bg: #f9fafb;
+      --font-pixel: 'VT323', monospace;
+      --font-clean: 'Inter', sans-serif;
     }
 
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
+      font-family: var(--font-clean);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+      background-size: 24px 24px;
     }
 
     .page-grid {
       display: grid;
-      grid-template-rows: auto 1fr auto auto;
-      min-height: 100vh;
+      grid-template-rows: auto auto 1fr auto auto;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
-      width: 100%;
+      min-height: 100vh;
     }
 
     header {
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      padding: 24px 0;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 20px;
       text-decoration: none;
       color: var(--text-color);
     }
 
     .brand-icon {
-      width: 36px;
-      height: 36px;
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
+
+    .brand-logo-img {
+      height: 260px;
+      width: auto;
       object-fit: contain;
       image-rendering: pixelated;
     }
@@ -74,45 +92,65 @@
       font-weight: 500;
       font-size: 15px;
       transition: color 0.2s ease;
-      position: relative;
-      padding-bottom: 4px;
     }
 
     nav a:hover, nav a.active {
       color: var(--text-color);
-    }
-
-    nav a.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background-color: var(--green-primary);
+      font-weight: 600;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
     }
 
     .btn-login {
-      background-color: var(--green-primary);
-      color: white;
-      border: none;
+      background-color: transparent;
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
       padding: 8px 18px;
       border-radius: 6px;
       font-weight: 600;
       font-size: 14px;
       cursor: pointer;
       text-decoration: none;
-      transition: background-color 0.2s ease;
+      transition: all 0.2s ease;
     }
 
     .btn-login:hover {
-      background-color: var(--green-hover);
+      background-color: var(--card-bg);
+    }
+
+    .server-status-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 16px;
+      margin-top: 24px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .status-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .status-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-value {
+      font-family: var(--font-pixel);
+      font-size: 22px;
+      color: var(--green-primary);
     }
 
     .hero {
@@ -124,32 +162,34 @@
     }
 
     .hero-content h1 {
-      font-size: 56px;
-      line-height: 1.1;
-      font-weight: 800;
-      letter-spacing: -1.5px;
-      text-transform: uppercase;
-      margin-bottom: 24px;
+      font-family: var(--font-pixel);
+      font-size: 64px;
+      line-height: 1;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
     }
 
     .hero-content p {
       font-size: 18px;
       color: var(--text-muted);
       margin-bottom: 32px;
-      max-width: 440px;
-      line-height: 1.5;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      align-items: center;
     }
 
     .btn-cta {
-      display: inline-block;
       background-color: var(--green-primary);
       color: white;
-      border: none;
       padding: 14px 28px;
       border-radius: 8px;
       font-weight: 600;
       font-size: 16px;
-      cursor: pointer;
       text-decoration: none;
       transition: background-color 0.2s ease, transform 0.1s ease;
       box-shadow: 0 4px 12px rgba(91, 135, 49, 0.2);
@@ -157,13 +197,33 @@
 
     .btn-cta:hover {
       background-color: var(--green-hover);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+    }
+
+    .btn-ip {
+      background-color: white;
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-ip:hover {
+      border-color: var(--text-color);
     }
 
     .hero-visual {
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
     }
 
     .hero-img {
@@ -172,19 +232,20 @@
       height: auto;
       object-fit: contain;
       image-rendering: pixelated;
-      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.08));
-      transition: transform 0.3s ease;
+      filter: drop-shadow(0 16px 32px rgba(0,0,0,0.12));
+      animation: float 4s ease-in-out infinite;
     }
 
-    .hero-img:hover {
-      transform: scale(1.05);
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
     }
 
     .features {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 32px;
-      padding: 40px 0;
+      padding: 60px 0;
       border-top: 1px solid var(--border-color);
     }
 
@@ -193,13 +254,23 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 16px;
+      background-color: white;
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.04);
     }
 
     .icon-container {
       width: 56px;
       height: 56px;
       background-color: var(--card-bg);
-      border-radius: 12px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -224,13 +295,98 @@
       line-height: 1.5;
     }
 
+    .interactive-section {
+      padding: 60px 0;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .section-title {
+      font-family: var(--font-pixel);
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .tab-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--border-color);
+      background-color: white;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background-color: var(--text-color);
+      color: white;
+      border-color: var(--text-color);
+    }
+
+    .tab-content {
+      display: none;
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .faq-section {
+      padding: 60px 0;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .faq-item {
+      background-color: white;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 16px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      padding: 0 20px 16px 20px;
+      display: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
     footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 32px 0;
       border-top: 1px solid var(--border-color);
-      margin-top: 20px;
+      margin-top: 40px;
     }
 
     .footer-text {
@@ -258,9 +414,13 @@
       header {
         grid-template-columns: 1fr auto;
       }
-      
+
       nav {
         display: none;
+      }
+
+      .brand-logo-img {
+        height: 120px;
       }
 
       .hero {
@@ -269,16 +429,13 @@
         padding: 40px 0;
       }
 
-      .hero-content h1 {
-        font-size: 38px;
-      }
-
       .hero-content p {
         margin: 0 auto 24px auto;
       }
 
-      .hero-img {
-        max-width: 180px;
+      .hero-buttons {
+        justify-content: center;
+        flex-direction: column;
       }
 
       .features {
@@ -299,24 +456,46 @@
     <header>
       <a href="#" class="brand">
         <img src="menad.png" alt="Mena de Diamante Logo" class="brand-icon">
+        <img src="logo.png" alt="Minecraft Logo" class="brand-logo-img">
       </a>
 
       <nav>
-        <a href="#" class="active">Inicio</a>
-        <a href="#">Comunidad</a>
-        <a href="#">Servidores</a>
+        <a href="#inicio" class="active">Inicio</a>
+        <a href="#caracteristicas">Características</a>
+        <a href="#guias">Guías</a>
+        <a href="#faq">FAQ</a>
       </nav>
 
       <div class="header-actions">
-        <a href="#" class="btn-login">Log in</a>
+        <a href="#" class="btn-login">Inicia Sesión</a>
       </div>
     </header>
 
-    <main class="hero">
+    <section class="server-status-bar">
+      <div class="status-item">
+        <span class="status-label">Servidor</span>
+        <span class="status-value">ONLINE</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">Jugadores</span>
+        <span class="status-value" id="player-count">1,420 / 2,000</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">Rendimiento</span>
+        <span class="status-value">20.0 TPS</span>
+      </div>
+    </section>
+
+    <main class="hero" id="inicio">
       <div class="hero-content">
-        <h1>REDESCUBRE<br>EL SURVIVAL</h1>
-        <p>Una experiencia de juego refinada y minimalista. Explora recursos, construye mecánicas y domina el mundo.</p>
-        <a href="https://www.minecraft.net/es-es/store/minecraft-deluxe-collection-pc?tabs=%7B%22details%22%3A0%7D" target="_blank" rel="noopener noreferrer" class="btn-cta">Descárgalo</a>
+        <h1>REDESCUBRE EL SURVIVAL</h1>
+        <p>Experimenta Minecraft de una forma refinada, limpia y optimizada. Explora recursos, automatiza procesos y domina el mundo con total claridad visual.</p>
+        <div class="hero-buttons">
+          <a href="https://www.minecraft.net/es-es/store/minecraft-deluxe-collection-pc?tabs=%7B%22details%22%3A0%7D" target="_blank" rel="noopener noreferrer" class="btn-cta">Descárgalo</a>
+          <button class="btn-ip" onclick="copyIP()">
+            <span>Copiar IP del Servidor</span>
+          </button>
+        </div>
       </div>
 
       <div class="hero-visual">
@@ -324,34 +503,78 @@
       </div>
     </main>
 
-    <section class="features">
+    <section class="features" id="caracteristicas">
       <div class="feature-card">
         <div class="icon-container">
           <img src="menad.png" alt="Recursos" class="feature-img">
         </div>
         <h3>Recursos Valiosos</h3>
-        <p>Encuentra vetas de diamantes y minerales escasos explorando las profundidades del mundo.</p>
+        <p>Aprende las capas óptimas para minar vetas de diamantes y minerales raros tras las actualizaciones recientes.</p>
       </div>
 
       <div class="feature-card">
         <div class="icon-container">
           <img src="Diamante.png" alt="Equipamiento" class="feature-img">
         </div>
-        <h3>Equipamiento Épico</h3>
-        <p>Forja herramientas, armas y armaduras con la mayor durabilidad disponible en el juego.</p>
+        <h3>Equipamiento Avanzado</h3>
+        <p>Guía de encantamientos y forja de Netherite para maximizar la durabilidad y protección de tu equipo.</p>
       </div>
 
       <div class="feature-card">
         <div class="icon-container">
           <img src="redstone.webp" alt="Redstone" class="feature-img">
         </div>
-        <h3>Automatización Redstone</h3>
-        <p>Crea circuitos, granjas automáticas y mecanismos avanzados impulsados por energía de Redstone.</p>
+        <h3>Mecanismos de Redstone</h3>
+        <p>Diagramas minimalistas y explicaciones paso a paso para construir granjas automáticas y puertas lógicas.</p>
+      </div>
+    </section>
+
+    <section class="interactive-section" id="guias">
+      <h2 class="section-title">GUÍAS RÁPIDAS</h2>
+      <div class="tab-buttons">
+        <button class="tab-btn active" onclick="switchTab('mineria')">Minería</button>
+        <button class="tab-btn" onclick="switchTab('redstone')">Redstone</button>
+        <button class="tab-btn" onclick="switchTab('construccion')">Construcción</button>
+      </div>
+
+      <div id="tab-mineria" class="tab-content active">
+        <strong>Nivel óptimo de diamantes:</strong> Desde las versiones recientes, la mayor densidad de diamantes se encuentra entre las capas <code>Y: -58</code> y <code>Y: -64</code>. Mina en línea recta dejando dos bloques de espacio para optimizar tus herramientas.
+      </div>
+
+      <div id="tab-redstone" class="tab-content">
+        <strong>Conceptos Básicos:</strong> La señal de Redstone se extiende hasta 15 bloques. Utiliza repetidores para amplificar el flujo de energía o agregar retardo en tics a tus circuitos automáticos.
+      </div>
+
+      <div id="tab-construccion" class="tab-content">
+        <strong>Paletas de Bloques Minimalistas:</strong> Combina materiales fríos (como la Pizarra Profunda) con tonos cálidos (Madera de Roble o Cuarzo) para crear bases modernas y estructuradas con alto contraste.
+      </div>
+    </section>
+
+    <section class="faq-section" id="faq">
+      <h2 class="section-title">PREGUNTAS FRECUENTES</h2>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <span>¿Qué versión del juego es necesaria?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          Esta guía y servidor están optimizados para Java y Bedrock Edition en la versión 1.20 y superiores.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <span>¿Cómo me uno al servidor?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          Copia la IP utilizando el botón de la parte superior e ingrésala en la sección de Multijugador dentro del menú principal de Minecraft.
+        </div>
       </div>
     </section>
 
     <footer>
-      <p class="footer-text">&copy; 2026 Minecraft. Todos los derechos reservados. No afiliado oficialmente con Mojang Studios.</p>
+      <p class="footer-text">&copy; 2026 Minecraft Minimal. Todos los derechos reservados. No afiliado oficialmente con Mojang Studios.</p>
       <div class="footer-links">
         <a href="#">Privacidad</a>
         <a href="#">Términos</a>
@@ -360,5 +583,24 @@
     </footer>
   </div>
 
+  <script>
+    function copyIP() {
+      navigator.clipboard.writeText("mc.ejemplo.net");
+      alert("IP copiada al portapapeles: mc.ejemplo.net");
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      event.target.classList.add('active');
+      document.getElementById('tab-' + tabName).classList.add('active');
+    }
+
+    function toggleFAQ(element) {
+      const item = element.parentElement;
+      item.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>
